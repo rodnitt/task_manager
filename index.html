@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/user-icon.png">
+    <title>My pretty task manager</title>
+</head>
+
+<body>
+    <header>
+        <div id="user-info">
+            <img src="images/user-icon.png" alt="User Icon" id="user-icon">
+            <span id="user-name">My projects</span>
+        </div>
+        <menu id="main-menu" data-type="project">
+            <ul>
+                <li id="menu-item--create-project" class="menu-item menu--project">create project</li>
+                <li id="menu-item--view-project" class="menu-item menu--task">view project</li>
+                <li class="menu-separator menu--task">|</li>
+                <li id="menu-item--create-task" class="menu-item menu--task">create task</li>
+                <li class="menu-separator menu--task">|</li>
+                <li id="menu-item--my-projects" class="menu-item menu--task">my projects</li>
+            </ul>
+        </menu>
+    </header>
+    <main class="flex-justified">
+        <div id="detail" class="card-bg drop-shadow inner-scroll hidden">
+            <!-- alerts of status -->
+            <div id="detail--backlog" class="detail__alert alert-grey label hidden">Backlog</div>
+            <div id="detail--in-progress" class="detail__alert alert-yellow label hidden">In progress</div>
+            <div id="detail--accomplished" class="detail__alert alert-green label hidden">Accomplished</div>
+            <!-- contents -->
+            <div style="padding: 30px 50px;" class="flex-column gap-large">
+                <div class="flex-row-center flex-top gap-extreme">
+                    <h2 id="detail__title">Project Title</h2>
+                    <button id="detail__options" data-type="project" class="dropdown">
+                        <img src="images/more.png" alt="Edit Icon" id="edit-project-btn" class="card-icon btn-icon" />
+                        <ul class="dropdown-content-project">
+                            <li id="edit-project" class="dropdown-item label">Edit Project</li>
+                            <li id="delete-project" class="dropdown-item label">Delete Project</li>
+                        </ul>
+                        <ul class="dropdown-content-task">
+                            <li id="edit-task" class="dropdown-item label">Edit Task</li>
+                            <li id="change-status-task" class="dropdown-item label">Change Status</li>
+                            <li id="delete-task" class="dropdown-item label">Delete Task</li>
+                        </ul>
+                    </button>
+                </div>
+                <p id="detail__text">Project Summary.</p>
+                <div class="flex-row-center gap-large">
+                    <!-- task responsible -->
+                    <div id="resp-info" class="flex-row-center gap-small hidden">
+                        <img src="images/user-icon.png" alt="User Icon" id="resp-icon" class="user-icon">
+                        <span id="resp-name" class="label">Responsible Guy</span>
+                    </div>
+                    <!-- task priority -->
+                    <div id="detail__task-priority--optional" class="flex-row-center gap-small hidden">
+                        <img src="images/optional.png" alt="Optional Icon" class="card-icon">
+                        <span class="label label-grey">Optional</span>
+                    </div>
+                    <div id="detail__task-priority--important" class="flex-row-center gap-small hidden">
+                        <img src="images/important.png" alt="Important Icon" class="card-icon">
+                        <span class="label label-yellow">Important</span>
+                    </div>
+                    <div id="detail__task-priority--urgent" class="flex-row-center gap-small hidden">
+                        <img src="images/urgent.png" alt="Urgent Icon" class="card-icon">
+                        <span class="label label-red">Urgent</span>
+                    </div>
+
+                </div>
+                <!-- dates -->
+                <div id="detail__dates" class="flex-row-center gap-large">
+                    <div id="detail__start-date" class="flex-row-center gap-small">
+                        <img src="images/flag.png" alt="Start Date Icon" class="card-icon">
+                        <span id="detail__start-date__text" class="label">Nov 11, 2025</span>
+                    </div>
+                    <div id="detail__due-date" class="flex-row-center gap-small">
+                        <img src="images/clock.png" alt="Due Date Icon" class="card-icon">
+                        <span id="detail__due-date__text" class="label">Nov 25, 2025</span>
+                        <span id="detail__due-date__overtime" class="btn-shaped alert-red label-alert">OVERTIME</span>
+                    </div>
+                </div>
+                <!-- progress -->
+                <div id="detail__progress" class="flex-column-center gap-small">
+                    <div id="progress-bar-bg" class="btn-shaped">
+                        <div id="detail__progress-bar__fill" class="progress-bar-fill"></div>
+                    </div>
+                    <span id="detail__progress__status" class="label">0/0 tasks completed</span>
+                </div>
+                <!-- collaborators -->
+                <div id="detail__collaborators" class="flex-row-center gap-small">
+                    <!-- items will be dynamically added here -->
+                    <!-- <img src="images/user-icon.png" title="User Name" alt="User Icon" class="user-icon"> -->
+                    <span id="more-collaborators" class="label hidden">+3 more</span>
+                </div>
+            </div>
+        </div>
+        <ul id="card-list" class="flex-column gap-medium inner-scroll hidden">
+            <!-- items will be dynamically added here -->
+            <!-- <li class="card card-shaped card-bg drop-shadow flex-row-center gap-small">
+                <div class="progress-bar-fill"></div>
+                <img src="images/user-icon.png" alt="Responsible Icon" class="user-icon">
+                <span class="label hidden">0/0</span>
+                <img src="images/urgent.png" alt="Urgent Icon" class="card-icon hidden">
+                <img src="images/important.png" alt="Important Icon" class="card-icon">
+                <img src="images/optional.png" alt="Optional Icon" class="card-icon hidden">
+                <span class="label">Card</span>
+                <img src="images/flag.png" alt="Start Date Icon" class="card-icon">
+                <img src="images/clock.png" alt="Due Date Icon" class="card-icon hidden">
+                <span class="label">Nov 12, 2025</span>
+                <span class="label-faded">Description goes here and here.</span>
+            </li> -->
+        </ul>
+        <dialog id="create-project-modal" class="modal">
+            <form method="dialog" class="flex-column gap-medium">
+                <span class="label">Create New Project</span>
+                <input type="text" id="project-title-input" class="modal__input" placeholder="Project Title" required>
+                <textarea id="project-summary-input" class="modal__textarea" placeholder="Project Summary"></textarea>
+                <div>
+                    <label for="project-start-date-input" class="label">Start Date:</label>
+                    <input type="datetime-local" id="project-start-date-input" class="modal__input label">
+                </div>
+                <div>
+                    <label for="project-due-date-input" class="label">Due Date:</label>
+                    <input type="datetime-local" id="project-due-date-input" class="modal__input label">
+                </div>
+                <div class="flex-row-center flex-justified gap-small">
+                    <input type="reset" id="cancel-create-project" class="btn-shaped" value="Cancel">
+                    <input type="submit" id="confirm-create-project" class="btn-shaped" value="Create">
+                </div>
+            </form>
+        </dialog>
+        <dialog id="create-task-modal" class="modal">
+            <form method="dialog" class="flex-column gap-medium">
+                <span class="label">Create New Task</span>
+                <input type="text" id="task-title-input" class="modal__input" placeholder="Task Title" required>
+                <textarea id="task-description-input" class="modal__textarea" placeholder="Task Description"></textarea>
+                <div>
+                    <span class="label">Priority:</span>
+                    <div>
+                        <input type="radio" id="task-priority-input-optional" name="task-priority" value="optional">
+                        <label for="task-priority-input-optional">Optional</label>
+                        <input type="radio" id="task-priority-input-normal" name="task-priority" value="normal" checked>
+                        <label for="task-priority-input-normal">Normal</label>
+                        <input type="radio" id="task-priority-input-important" name="task-priority" value="important">
+                        <label for="task-priority-input-important">Important</label>
+                        <input type="radio" id="task-priority-input-urgent" name="task-priority" value="urgent">
+                        <label for="task-priority-input-urgent">Urgent</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="task-start-date-input" class="label">Start Date:</label>
+                    <input type="datetime-local" id="task-start-date-input" class="modal__input label">
+                </div>
+                <div>
+                    <label for="task-due-date-input" class="label">Due Date:</label>
+                    <input type="datetime-local" id="task-due-date-input" class="modal__input label">
+                </div>
+                <div class="flex-row-center flex-justified gap-small">
+                    <input type="reset" id="cancel-create-task" class="btn-shaped" value="Cancel">
+                    <input type="submit" id="confirm-create-task" class="btn-shaped" value="Create">
+                </div>
+            </form>
+        </dialog>
+        <dialog id="change-task-status" class="modal">
+            <form method="dialog" class="flex-column-center gap-medium">
+                <div class="flex-column gap-medium">
+                    <div><input type="radio" id="task-status-input-backlog" name="task-status" value="backlog" checked>
+                        <label for="task-status-input-backlog">Backlog</label>
+                    </div>
+                    <div><input type="radio" id="task-status-input-in-progress" name="task-status" value="in progress">
+                        <label for="task-status-input-in-progress">In progress</label>
+                    </div>
+                    <div><input type="radio" id="task-status-input-completed" name="task-status" value="completed">
+                        <label for="task-status-input-completed">Accomplished</label>
+                    </div>
+                </div>
+                <div class="flex-row-center flex-justified gap-small">
+                    <input type="reset" id="cancel-status-task" class="btn-shaped" value="Cancel">
+                    <input type="submit" id="confirm-status-task" class="btn-shaped" value="Create">
+                </div>
+            </form>
+        </dialog>
+        <div id="no-projects-message" class="advice-center hidden">
+            <p>No projects available. Click "create project" to add a new project.</p>
+        </div>
+        <div id="no-tasks-message" class="flex-row-center hidden">
+            <p>No task available. Click "create task" to add a new task.</p>
+        </div>
+    </main>
+    <script src="src/index.js" type="module"></script>
+</body>
+
+</html>
